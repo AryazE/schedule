@@ -24,8 +24,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: pip install tox tox-gh-actions
+      - name: Instrument code
+        uses: AryazE/auto-dylin/instrument@main
       - name: Tests
         run: tox
+      - name: DyLin reports
+        if: always()
+        uses: AryazE/auto-dylin/report@main
       - name: Coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
